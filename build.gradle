@@ -1,6 +1,3 @@
-//import myapp.gradle.Deps
-//import myapp.gradle.HelloTask
-
 buildscript {
     ext.kotlin_version = '1.3.50'
 
@@ -10,7 +7,6 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -22,13 +18,3 @@ allprojects {
         
     }
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
-
-//task helloTask(type: HelloTask)
-
-//apply plugin: myapp.gradle.HelloPlugin
-

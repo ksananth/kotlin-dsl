@@ -1,11 +1,10 @@
-//import myapp.gradle.Deps
-
 apply plugin: 'java'
 
-
-configurations {
-    cleanedAnnotations
-    implementation.exclude group: 'org.jetbrains' , module:'annotations'
+compileJava {
+    options.compilerArgs << '-parameters'
+    options.fork = true
+    options.incremental = true
+    sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 dependencies {
