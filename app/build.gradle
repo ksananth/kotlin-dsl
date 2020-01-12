@@ -1,28 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+apply plugin: 'java'
+//apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    defaultConfig {
-        applicationId "com.dsl.myapplication"
-        minSdkVersion 26
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+
+configurations {
+    cleanedAnnotations
+    implementation.exclude group: 'org.jetbrains' , module:'annotations'
 }
 
 dependencies {
@@ -31,9 +14,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.squareup:javapoet:1.10.0'
-    implementation ("org.checkerframework:checker:2.1.10"){
-        exclude group: "org.jetbrains", module: "annotations"
-    }
+    implementation ("org.checkerframework:checker:2.1.10")
     testImplementation 'org.mockito:mockito-core:3.2.0'
 }
 
