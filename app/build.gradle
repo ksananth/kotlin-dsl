@@ -1,6 +1,6 @@
+//import myapp.gradle.Deps
+
 apply plugin: 'java'
-//apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 
 configurations {
@@ -10,12 +10,36 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //implementation 'androidx.core:core-ktx:1.1.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.squareup:javapoet:1.10.0'
     implementation ("org.checkerframework:checker:2.1.10")
     testImplementation 'org.mockito:mockito-core:3.2.0'
 }
 
+/*
 
+task createDatabase(type: MySqlTask) {
+    println 'Hello createDatabase'
+}
+
+task createUser(type: MySqlTask, dependsOn: createDatabase) {
+    println 'Hello createUser'
+}
+
+task createTable(type: MySqlTask, dependsOn: createUser) {
+    println 'Hello createTable'
+}
+
+class MySqlTask extends DefaultTask {
+    def hostname = 'localhost'
+    def port = 3306
+    def sql
+    def database
+    def username = 'root'
+    def password = 'password'
+
+    @TaskAction
+    def runQuery() {
+        println 'Hello MySqlTask'
+    }
+}*/
