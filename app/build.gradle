@@ -14,31 +14,3 @@ dependencies {
     implementation ("org.checkerframework:checker:2.1.10")
     testImplementation 'org.mockito:mockito-core:3.2.0'
 }
-
-/*
-
-task createDatabase(type: MySqlTask) {
-    println 'Hello createDatabase'
-}
-
-task createUser(type: MySqlTask, dependsOn: createDatabase) {
-    println 'Hello createUser'
-}
-
-task createTable(type: MySqlTask, dependsOn: createUser) {
-    println 'Hello createTable'
-}
-
-class MySqlTask extends DefaultTask {
-    def hostname = 'localhost'
-    def port = 3306
-    def sql
-    def database
-    def username = 'root'
-    def password = 'password'
-
-    @TaskAction
-    def runQuery() {
-        println 'Hello MySqlTask'
-    }
-}*/
