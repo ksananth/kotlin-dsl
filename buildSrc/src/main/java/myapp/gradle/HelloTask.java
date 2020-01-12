@@ -10,7 +10,7 @@ public class HelloTask extends DefaultTask {
     public void run() {
         System.out.println("Hello from task " + getPath() + "!");
         try {
-            new FunCreator().createFile();
+            new FunCreator().create();
         } catch (IOException e) {
             e.printStackTrace();
         }
