@@ -16,7 +16,7 @@ import java.util.Map;
 
 import javax.lang.model.element.Modifier;
 
-class FunCreator {
+class AnalyticsCreator {
 
     void createFile() throws IOException {
         TypeName wildcard = WildcardTypeName.subtypeOf(Object.class);

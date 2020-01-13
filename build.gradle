@@ -1,5 +1,6 @@
+import myapp.gradle.AnalyticsPlugin
 import myapp.gradle.Deps
-import myapp.gradle.HelloTask
+import myapp.gradle.AnalyticsTask
 
 buildscript {
     repositories {
@@ -21,6 +22,6 @@ allprojects {
 }
 
 
-task helloTask(type: HelloTask)
+task analyticsTask(type: AnalyticsTask)
 
-apply plugin: myapp.gradle.HelloPlugin
+apply plugin: AnalyticsPlugin
