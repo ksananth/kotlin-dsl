@@ -1,0 +1,22 @@
+{
+  "Data my_app configuration": {
+    "a": "a",
+    "b": "b",
+    "c": "c",
+    "d": "d",
+    "Context": "context",
+    "Type": "<type>\n",
+    "url": "<url>",
+    "ruleName": "trackState"
+  },
+  "Data my:app:settings:click back:click:deactivated": {
+    "a": "a",
+    "b": "b",
+    "c": "c",
+    "d": "d",
+    "Context": "context",
+    "Type": "<type>\n",
+    "url": "<url>",
+    "ruleName": "trackAction"
+  }
+}
