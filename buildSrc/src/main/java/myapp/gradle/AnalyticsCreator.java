@@ -1,6 +1,5 @@
 package myapp.gradle;
 
-import com.google.gson.JsonObject;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -23,10 +22,12 @@ import javax.lang.model.element.Modifier;
 
 
 class AnalyticsCreator {
+
     public static void main(String[] args) throws Exception {
         getJson("/Users/anand/Documents/android/MyApplication5/buildSrc/src/main/resources/latest/report_1.0.json");
     }
-        void createFile() throws IOException {
+
+    void createFile() throws IOException {
         TypeName wildcard = WildcardTypeName.subtypeOf(Object.class);
 
         TypeName classOfAny = ParameterizedTypeName.get(ClassName.get(Class.class), wildcard);
@@ -88,13 +89,13 @@ class AnalyticsCreator {
         jsonObject.keySet().forEach(keyStr ->
         {
             Object keyvalue = jsonObject.get(keyStr);
-            System.out.println("key: "+ keyStr);
+            System.out.println("key: " + keyStr);
             JSONObject valueObj = (JSONObject) keyvalue;
 
             valueObj.keySet().forEach(valueStr ->
             {
                 Object value = valueObj.get(valueStr);
-                System.out.println( valueStr + " : " + value);
+                System.out.println(valueStr + " : " + value);
 
             });
         });
