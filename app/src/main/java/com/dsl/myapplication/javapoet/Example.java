@@ -1,6 +1,5 @@
 package com.dsl.myapplication.javapoet;
 
-import com.dsl.myapplication.NewFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -16,12 +15,8 @@ import java.util.Map;
 
 import javax.lang.model.element.Modifier;
 
-import sun.tools.tree.NewArrayExpression;
-
 public class Example {
     public static void main(String[] args) throws IOException {
-
-        new NewFile();
 
         TypeName wildcard = WildcardTypeName.subtypeOf(Object.class);
 

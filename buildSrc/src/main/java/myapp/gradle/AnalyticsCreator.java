@@ -59,17 +59,45 @@ class AnalyticsCreator {
     }
 
     void create() throws IOException {
+        TypeName string = ClassName.get(String.class);
+        TypeName hashMap = ClassName.get(HashMap.class);
+        TypeName mapOfStringAndClassOfAny = ParameterizedTypeName.get(ClassName.get(Map.class), string, string);
 
-        MethodSpec main = MethodSpec.methodBuilder("main")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+        FieldSpec paramA = FieldSpec
+                .builder(String.class, "paramA")
+                .addModifiers(Modifier.PRIVATE)
+                .build();
+
+        FieldSpec paramB = FieldSpec
+                .builder(Integer.class, "paramB")
+                .addModifiers(Modifier.PRIVATE)
+                .build();
+
+
+        MethodSpec main = MethodSpec.methodBuilder("category")
+                .addModifiers(Modifier.PUBLIC)
                 .returns(void.class)
-                .addParameter(String[].class, "args")
-                .addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!")
+                .addParameter(String.class, "args")
+                .addStatement("$T<String , String> hashMap = new HashMap<>()",hashMap)
+                .addStatement("hashMap.put(\"page.category\", \"fb\")")
+                //.addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!")
+                .addStatement("analyticsClient.trackPage(\"details\", hashMap)")
+                .build();
+
+        MethodSpec constructor = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(String.class, "paramA")
+                .addParameter(Integer.TYPE, "paramB")
+                .addStatement("this.paramA = paramA")
+                .addStatement("this.paramB = paramB")
                 .build();
 
 
         TypeSpec fieldImpl = TypeSpec.classBuilder("NewFile")
                 .addModifiers(Modifier.PUBLIC)
+                .addField(paramA)
+                .addField(paramB)
+                .addMethod(constructor)
                 .addMethod(main)
                 .build();
 
@@ -89,13 +117,13 @@ class AnalyticsCreator {
         jsonObject.keySet().forEach(keyStr ->
         {
             Object keyvalue = jsonObject.get(keyStr);
-            System.out.println("key: " + keyStr);
+            System.out.println("key: " + keyStr); //create method
             JSONObject valueObj = (JSONObject) keyvalue;
 
             valueObj.keySet().forEach(valueStr ->
             {
                 Object value = valueObj.get(valueStr);
-                System.out.println(valueStr + " : " + value);
+                System.out.println(valueStr + " : " + value); // create hashmap
 
             });
         });
