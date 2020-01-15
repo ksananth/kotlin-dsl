@@ -1,4 +1,4 @@
-package myapp.gradle;
+package com.dsl.myapplication;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;

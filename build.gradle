@@ -1,6 +1,6 @@
-import myapp.gradle.AnalyticsPlugin
-import myapp.gradle.Deps
-import myapp.gradle.AnalyticsTask
+import com.dsl.myapplication.AnalyticsPlugin
+import com.dsl.myapplication.Deps
+import com.dsl.myapplication.AnalyticsTask
 
 buildscript {
     repositories {

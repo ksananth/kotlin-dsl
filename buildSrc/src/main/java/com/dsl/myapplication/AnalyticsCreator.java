@@ -1,4 +1,4 @@
-package myapp.gradle;
+package com.dsl.myapplication;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -64,13 +64,11 @@ class AnalyticsCreator {
         TypeName mapOfStringAndClassOfAny = ParameterizedTypeName.get(ClassName.get(Map.class), string, string);
 
         FieldSpec paramA = FieldSpec
-                .builder(String.class, "paramA")
-                .addModifiers(Modifier.PRIVATE)
+                .builder(AnalyticsClient.class, "analyticsClient", Modifier.PRIVATE)
                 .build();
 
         FieldSpec paramB = FieldSpec
-                .builder(Integer.class, "paramB")
-                .addModifiers(Modifier.PRIVATE)
+                .builder(String.class, "language", Modifier.PRIVATE)
                 .build();
 
 
@@ -86,10 +84,10 @@ class AnalyticsCreator {
 
         MethodSpec constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(String.class, "paramA")
-                .addParameter(Integer.TYPE, "paramB")
-                .addStatement("this.paramA = paramA")
-                .addStatement("this.paramB = paramB")
+                .addParameter(AnalyticsClient.class, "analyticsClient")
+                .addParameter(String.class, "language")
+                .addStatement("this.analyticsClient = analyticsClient")
+                .addStatement("this.language = language")
                 .build();
 
 

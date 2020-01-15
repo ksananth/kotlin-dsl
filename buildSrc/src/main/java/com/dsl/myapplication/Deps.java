@@ -1,4 +1,4 @@
-package myapp.gradle;
+package com.dsl.myapplication;
 
 public class Deps {
     public static final String androidPlugin = "com.android.tools.build:gradle:3.5.3";

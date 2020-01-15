@@ -1,4 +1,4 @@
-package myapp.gradle;
+package com.dsl.myapplication;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
