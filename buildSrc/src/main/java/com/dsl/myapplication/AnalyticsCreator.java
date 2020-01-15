@@ -23,7 +23,9 @@ import javax.lang.model.element.Modifier;
 
 class AnalyticsCreator {
 
-    private final String FILE_NAME = "AnalyticsIntrumentation";
+    private final String CLASS_FILE_NAME = "AnalyticsInstrumentation";
+
+    private final String INTERFACE_FILE_NAME = "AnalyticsApi";
 
     public static void main(String[] args) throws Exception {
         getJson("/Users/anand/Documents/android/MyApplication5/buildSrc/src/main/resources/latest/report_1.0.json");
@@ -45,7 +47,7 @@ class AnalyticsCreator {
                 .initializer("new $T()", hashMapOfStringAndClassOfAny)
                 .build();
 
-        TypeSpec fieldImpl = TypeSpec.classBuilder(FILE_NAME)
+        TypeSpec fieldImpl = TypeSpec.classBuilder(CLASS_FILE_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(fieldSpec)
                 .build();
@@ -56,11 +58,11 @@ class AnalyticsCreator {
         javaFile.writeTo(System.out);
 
 
-        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + FILE_NAME + ".java", "UTF-8");
+        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + CLASS_FILE_NAME + ".java", "UTF-8");
         javaFile.writeTo(stream);
     }
 
-    void create() throws IOException {
+    void createAnalyticsClass() throws IOException {
         TypeName string = ClassName.get(String.class);
         TypeName hashMap = ClassName.get(HashMap.class);
         TypeName mapOfStringAndClassOfAny = ParameterizedTypeName.get(ClassName.get(Map.class), string, string);
@@ -93,7 +95,8 @@ class AnalyticsCreator {
                 .build();
 
 
-        TypeSpec fieldImpl = TypeSpec.classBuilder(FILE_NAME)
+        TypeSpec fieldImpl = TypeSpec.classBuilder(CLASS_FILE_NAME)
+                .addSuperinterface(AnalyticsApi.class)
                 .addModifiers(Modifier.PUBLIC)
                 .addField(paramA)
                 .addField(paramB)
@@ -106,7 +109,7 @@ class AnalyticsCreator {
 
 
         javaFile.writeTo(System.out);
-        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + FILE_NAME + ".java", "UTF-8");
+        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + CLASS_FILE_NAME + ".java", "UTF-8");
         javaFile.writeTo(stream);
     }
 
@@ -117,13 +120,13 @@ class AnalyticsCreator {
         jsonObject.keySet().forEach(keyStr ->
         {
             Object keyvalue = jsonObject.get(keyStr);
-            System.out.println("key: " + keyStr); //create method
+            System.out.println("key: " + keyStr); //createAnalyticsClass method
             JSONObject valueObj = (JSONObject) keyvalue;
 
             valueObj.keySet().forEach(valueStr ->
             {
                 Object value = valueObj.get(valueStr);
-                System.out.println(valueStr + " : " + value); // create hashmap
+                System.out.println(valueStr + " : " + value); // createAnalyticsClass hashmap
 
             });
         });
@@ -133,5 +136,23 @@ class AnalyticsCreator {
         FileReader reader = new FileReader(filename);
         JSONParser jsonParser = new JSONParser();
         return jsonParser.parse(reader);
+    }
+
+    void createAnalyticsInterface() throws IOException {
+        TypeSpec fieldImpl = TypeSpec.interfaceBuilder(INTERFACE_FILE_NAME)
+                .addModifiers(Modifier.PUBLIC)
+                .build();
+
+        JavaFile javaFile = JavaFile.builder("com.dsl.myapplication", fieldImpl)
+                .build();
+
+
+        try {
+            javaFile.writeTo(System.out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + INTERFACE_FILE_NAME + ".java", "UTF-8");
+        javaFile.writeTo(stream);
     }
 }

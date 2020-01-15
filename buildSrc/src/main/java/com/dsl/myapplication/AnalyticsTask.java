@@ -10,7 +10,8 @@ public class AnalyticsTask extends DefaultTask {
 
         try {
             AnalyticsCreator analyticsCreator = new AnalyticsCreator();
-            analyticsCreator.create();
+            analyticsCreator.createAnalyticsInterface();
+            analyticsCreator.createAnalyticsClass();
             analyticsCreator.getJson(getProject().getProjectDir().getAbsolutePath()+"/buildSrc/src/main/resources/latest/report_1.0.json");
         } catch (Exception e) {
             e.printStackTrace();
