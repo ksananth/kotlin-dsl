@@ -23,6 +23,8 @@ import javax.lang.model.element.Modifier;
 
 class AnalyticsCreator {
 
+    private final String FILE_NAME = "AnalyticsIntrumentation";
+
     public static void main(String[] args) throws Exception {
         getJson("/Users/anand/Documents/android/MyApplication5/buildSrc/src/main/resources/latest/report_1.0.json");
     }
@@ -43,7 +45,7 @@ class AnalyticsCreator {
                 .initializer("new $T()", hashMapOfStringAndClassOfAny)
                 .build();
 
-        TypeSpec fieldImpl = TypeSpec.classBuilder("NewFile")
+        TypeSpec fieldImpl = TypeSpec.classBuilder(FILE_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(fieldSpec)
                 .build();
@@ -54,7 +56,7 @@ class AnalyticsCreator {
         javaFile.writeTo(System.out);
 
 
-        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + "NewFile.java", "UTF-8");
+        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + FILE_NAME + ".java", "UTF-8");
         javaFile.writeTo(stream);
     }
 
@@ -91,7 +93,7 @@ class AnalyticsCreator {
                 .build();
 
 
-        TypeSpec fieldImpl = TypeSpec.classBuilder("NewFile")
+        TypeSpec fieldImpl = TypeSpec.classBuilder(FILE_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addField(paramA)
                 .addField(paramB)
@@ -104,7 +106,7 @@ class AnalyticsCreator {
 
 
         javaFile.writeTo(System.out);
-        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + "NewFile.java", "UTF-8");
+        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + FILE_NAME + ".java", "UTF-8");
         javaFile.writeTo(stream);
     }
 
