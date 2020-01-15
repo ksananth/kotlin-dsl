@@ -40,14 +40,15 @@ class AnalyticsCreator {
                 .build();
 
 
-        MethodSpec main = MethodSpec.methodBuilder("category")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(void.class)
-                .addParameter(String.class, "args")
-                .addStatement("$T<String , String> hashMap = new HashMap<>()",hashMap)
-                .addStatement("hashMap.put(\"page.category\", \"fb\")")
-                .addStatement("analyticsClient.trackPage(\"details\", hashMap)")
-                .build();
+        //Create Method
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("category");
+        methodBuilder.addModifiers(Modifier.PUBLIC);
+        methodBuilder.returns(void.class);
+        methodBuilder.addStatement("$T<String , String> hashMap = new HashMap<>()",hashMap);
+        methodBuilder.addParameter(String.class, "args"); //dynamic
+        methodBuilder.addStatement("hashMap.put(\"page.category\", \"fb\")"); //dynamic
+        methodBuilder.addStatement("analyticsClient.trackPage(\"details\", hashMap)");
+        MethodSpec methodSpec = methodBuilder.build();
 
         MethodSpec constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
@@ -58,16 +59,17 @@ class AnalyticsCreator {
                 .build();
 
 
-        TypeSpec fieldImpl = TypeSpec.classBuilder(CLASS_FILE_NAME)
-                .addSuperinterface(AnalyticsApi.class)
-                .addModifiers(Modifier.PUBLIC)
-                .addField(paramA)
-                .addField(paramB)
-                .addMethod(constructor)
-                .addMethod(main)
-                .build();
+        //Create Class
+        TypeSpec.Builder classBuilder = TypeSpec.classBuilder(CLASS_FILE_NAME);
+        classBuilder.addSuperinterface(AnalyticsApi.class);
+                classBuilder.addModifiers(Modifier.PUBLIC);
+                classBuilder.addField(paramA);
+                classBuilder.addField(paramB);
+                classBuilder.addMethod(constructor);
+                classBuilder.addMethod(methodSpec);
+        TypeSpec classImpl = classBuilder.build();
 
-        JavaFile javaFile = JavaFile.builder("com.dsl.myapplication", fieldImpl)
+        JavaFile javaFile = JavaFile.builder("com.dsl.myapplication", classImpl)
                 .build();
 
 
