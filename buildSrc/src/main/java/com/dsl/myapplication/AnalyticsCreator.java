@@ -93,13 +93,17 @@ class AnalyticsCreator {
         methodBuilder.addModifiers(Modifier.PUBLIC);
         methodBuilder.returns(void.class);
         methodBuilder.addStatement("$T<String , String> hashMap = new HashMap<>()",hashMap);
-        methodBuilder.addParameter(String.class, "args"); //dynamic
 
         hashMapValues.keySet().forEach(valueStr ->
         {
-            Object value = hashMapValues.get(valueStr);
+            String key = String.valueOf(valueStr).toLowerCase();
+            String value = String.valueOf(hashMapValues.get(valueStr));
             System.out.println(valueStr + " : " + value); // createAnalyticsClass hashmap
-            methodBuilder.addStatement("hashMap.put(\""+valueStr+"\", \""+value+"\")"); //dynamic
+            if (value.contains("<") && value.contains(">")) {
+                methodBuilder.addParameter(String.class, key); //dynamic
+            } else {
+                methodBuilder.addStatement("hashMap.put(\"" + valueStr + "\", \"" + value + "\")"); //dynamic
+            }
         });
         methodBuilder.addStatement("analyticsClient.trackPage(\"details\", hashMap)");
         return methodBuilder.build();
