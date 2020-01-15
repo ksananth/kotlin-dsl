@@ -1,5 +1,5 @@
 {
-  "Data my_app configuration": {
+  "Data_my_app_configuration": {
     "a": "a",
     "b": "b",
     "c": "c",
@@ -9,7 +9,7 @@
     "url": "<url>",
     "ruleName": "trackState"
   },
-  "Data my:app:settings:click back:click:deactivated": {
+  "Data_my": {
     "a": "a",
     "b": "b",
     "c": "c",
