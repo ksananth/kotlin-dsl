@@ -125,7 +125,22 @@ class AnalyticsCreator {
             properMethodName.append(str.substring(0, 1).toUpperCase()).append(str.substring(1));
         }
 
-        return properMethodName.toString().replaceAll(":", "_");
+        String removedUnderscore = properMethodName.toString().replaceAll(":", "_");
+        System.out.println("removedUnderscore"+removedUnderscore);
+
+        String finalName = capitalize(removedUnderscore);
+        System.out.println("removedUnderscore"+finalName);
+
+        return finalName;
+    }
+
+
+    private String capitalize(String str) {
+        if(str== null || str.isEmpty()) {
+            return str;
+        }
+
+        return str.substring(0, 1).toLowerCase() + str.substring(1);
     }
 
     private static Object readJson(String filename) throws Exception {

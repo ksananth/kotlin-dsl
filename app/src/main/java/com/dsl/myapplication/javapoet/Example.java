@@ -1,5 +1,7 @@
 package com.dsl.myapplication.javapoet;
 
+import com.dsl.myapplication.AnalyticsClient;
+import com.dsl.myapplication.AnalyticsInstrumentation;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -17,6 +19,9 @@ import javax.lang.model.element.Modifier;
 
 public class Example {
     public static void main(String[] args) throws IOException {
+
+        AnalyticsInstrumentation instrumentation = new AnalyticsInstrumentation(new AnalyticsClient() ,"EN");
+        instrumentation.dataMy_app_settings_clickBack_click_deactivated("", "");
 
         TypeName wildcard = WildcardTypeName.subtypeOf(Object.class);
 

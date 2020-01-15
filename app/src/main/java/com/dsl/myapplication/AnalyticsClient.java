@@ -2,7 +2,7 @@ package com.dsl.myapplication;
 
 import java.util.HashMap;
 
-class AnalyticsClient {
+public class AnalyticsClient {
     void trackPage(String details, HashMap<String, String> hashMap) {
 
     }
