@@ -24,7 +24,6 @@ import javax.lang.model.element.Modifier;
 class AnalyticsCreator {
 
     private final String CLASS_FILE_NAME = "AnalyticsInstrumentation";
-
     private final String INTERFACE_FILE_NAME = "AnalyticsApi";
 
     public static void main(String[] args) throws Exception {
@@ -139,8 +138,13 @@ class AnalyticsCreator {
     }
 
     void createAnalyticsInterface() throws IOException {
+
         TypeSpec fieldImpl = TypeSpec.interfaceBuilder(INTERFACE_FILE_NAME)
                 .addModifiers(Modifier.PUBLIC)
+                .addMethod(MethodSpec.methodBuilder("category")
+                        .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                        .addParameter(String.class, "args")
+                        .build())
                 .build();
 
         JavaFile javaFile = JavaFile.builder("com.dsl.myapplication", fieldImpl)
