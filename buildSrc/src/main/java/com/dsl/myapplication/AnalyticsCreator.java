@@ -25,6 +25,7 @@ class AnalyticsCreator {
 
     private final String CLASS_FILE_NAME = "AnalyticsInstrumentation.java";
     private final String INTERFACE_FILE_NAME = "AnalyticsApi.java";
+    private final String PATH = "./app/src/main/java/com/dsl/myapplication/";
 
     public static void main(String[] args) throws Exception {
         getJson("/Users/anand/Documents/android/MyApplication5/buildSrc/src/main/resources/latest/report_1.0.json");
@@ -108,7 +109,7 @@ class AnalyticsCreator {
 
 
         javaFile.writeTo(System.out);
-        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + CLASS_FILE_NAME , "UTF-8");
+        PrintStream stream = new PrintStream(PATH + CLASS_FILE_NAME , "UTF-8");
         javaFile.writeTo(stream);
     }
 
@@ -156,7 +157,7 @@ class AnalyticsCreator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        PrintStream stream = new PrintStream("./app/src/main/java/com/dsl/myapplication/" + INTERFACE_FILE_NAME , "UTF-8");
+        PrintStream stream = new PrintStream(PATH + INTERFACE_FILE_NAME , "UTF-8");
         javaFile.writeTo(stream);
     }
 }
