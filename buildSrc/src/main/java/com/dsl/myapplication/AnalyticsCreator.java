@@ -46,7 +46,6 @@ class AnalyticsCreator {
                 .addParameter(String.class, "args")
                 .addStatement("$T<String , String> hashMap = new HashMap<>()",hashMap)
                 .addStatement("hashMap.put(\"page.category\", \"fb\")")
-                //.addStatement("$T.out.println($S)", System.class, "Hello, JavaPoet!")
                 .addStatement("analyticsClient.trackPage(\"details\", hashMap)")
                 .build();
 
