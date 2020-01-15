@@ -89,7 +89,7 @@ class AnalyticsCreator {
     @NotNull
     private MethodSpec createMethod(String methodName, JSONObject hashMapValues) {
         TypeName hashMap = ClassName.get(HashMap.class);
-        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName);
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(getProperMethodName(methodName));
         methodBuilder.addModifiers(Modifier.PUBLIC);
         methodBuilder.returns(void.class);
         methodBuilder.addStatement("$T<String , String> hashMap = new HashMap<>()",hashMap);
@@ -101,12 +101,31 @@ class AnalyticsCreator {
             System.out.println(valueStr + " : " + value); // createAnalyticsClass hashmap
             if (value.contains("<") && value.contains(">")) {
                 methodBuilder.addParameter(String.class, key); //dynamic
+                methodBuilder.addStatement("hashMap.put(\"" + valueStr + "\","+ key+")"); //dynamic
+
             } else {
                 methodBuilder.addStatement("hashMap.put(\"" + valueStr + "\", \"" + value + "\")"); //dynamic
             }
         });
         methodBuilder.addStatement("analyticsClient.trackPage(\"details\", hashMap)");
         return methodBuilder.build();
+    }
+
+    private String getProperMethodName(String methodName) {
+        //String properMethodName = methodName.replaceAll(" ","_").replaceAll(":", "_");
+        StringBuilder properMethodName = new StringBuilder();
+        String[] splitedBySpace = methodName.split("\\s+");
+        for (String str: splitedBySpace) {
+            properMethodName.append(str.substring(0, 1).toUpperCase()).append(str.substring(1));
+        }
+
+        String[] splitedByUnderscore = properMethodName.toString().split("_");
+        properMethodName = new StringBuilder();
+        for (String str: splitedByUnderscore) {
+            properMethodName.append(str.substring(0, 1).toUpperCase()).append(str.substring(1));
+        }
+
+        return properMethodName.toString().replaceAll(":", "_");
     }
 
     private static Object readJson(String filename) throws Exception {
