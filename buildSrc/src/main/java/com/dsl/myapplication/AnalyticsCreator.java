@@ -111,6 +111,22 @@ class AnalyticsCreator {
         return methodBuilder.build();
     }
 
+    private MethodSpec createMethodForInterface(String methodName, JSONObject hashMapValues) {
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(getProperMethodName(methodName));
+        methodBuilder.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
+        methodBuilder.returns(void.class);
+        hashMapValues.keySet().forEach(valueStr ->
+        {
+            String key = String.valueOf(valueStr).toLowerCase();
+            String value = String.valueOf(hashMapValues.get(valueStr));
+            System.out.println(valueStr + " : " + value); // createAnalyticsClass hashmap
+            if (value.contains("<") && value.contains(">")) {
+                methodBuilder.addParameter(String.class, key); //dynamic
+            }
+        });
+        return methodBuilder.build();
+    }
+
     private String getProperMethodName(String methodName) {
         //String properMethodName = methodName.replaceAll(" ","_").replaceAll(":", "_");
         StringBuilder properMethodName = new StringBuilder();
@@ -149,17 +165,28 @@ class AnalyticsCreator {
         return jsonParser.parse(reader);
     }
 
-    void createAnalyticsInterface() throws IOException {
+    void createAnalyticsInterface() throws Exception {
 
-        TypeSpec fieldImpl = TypeSpec.interfaceBuilder(INTERFACE_FILE_NAME)
-                .addModifiers(Modifier.PUBLIC)
-                .addMethod(MethodSpec.methodBuilder("category")
-                        .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                        .addParameter(String.class, "args")
-                        .build())
-                .build();
+        TypeSpec.Builder interfaceBuilder = TypeSpec.interfaceBuilder(INTERFACE_FILE_NAME);
+        interfaceBuilder.addModifiers(Modifier.PUBLIC);
 
-        JavaFile javaFile = JavaFile.builder("com.dsl.myapplication", fieldImpl)
+
+        JSONObject analyticsJsonObj = (JSONObject) readJson(ANALYTICS_JSON);
+        analyticsJsonObj.keySet().forEach(methodName ->
+        {
+            Object keyvalue = analyticsJsonObj.get(methodName);
+            System.out.println("key: " + methodName); //createAnalyticsClass method
+            JSONObject hashMapValues = (JSONObject) keyvalue;
+
+            //Create Method
+            MethodSpec methodSpec = createMethodForInterface("" + methodName, hashMapValues);
+            interfaceBuilder.addMethod(methodSpec);
+
+        });
+
+        TypeSpec interfaceImpl = interfaceBuilder.build();
+
+        JavaFile javaFile = JavaFile.builder("com.dsl.myapplication", interfaceImpl)
                 .build();
 
 
